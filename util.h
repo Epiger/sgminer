@@ -31,6 +31,7 @@
 #elif defined WIN32
 	#include <ws2tcpip.h>
 	#include <winsock2.h>
+	#include <errno.h>
 
 	#define SOCKETTYPE SOCKET
 	#define SOCKETFAIL(a) ((int)(a) == SOCKET_ERROR)
