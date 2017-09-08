@@ -49,7 +49,7 @@ static inline int nanosleep(const struct timespec *req, struct timespec *rem)
 
 #if defined(__MINGW32__) && !defined(__MINGW64_VERSION_MAJOR)
 // Reported unneded in https://github.com/veox/sgminer/issues/37 */
-static inline int sleep(unsigned int secs)
+static inline unsigned int sleep(unsigned int secs)
 {
 	struct timespec req, rem;
 	req.tv_sec = secs;
