@@ -1,5 +1,132 @@
 # sgminer
 
+This is a fork of the Original sgminer for all who ran into 
+problems at installing sgminer on Windows. 
+For all who have still Problems please open an Issue
+
+## Installing on Windows
+
+###Step 1 Install MinGW
+First of all you need to install MinGW "is a minimalist development environment 
+for native Microsoft Windows applications" 
+**Go to**: http://www.mingw.org/wiki/Getting_Started
+and Click on the Link _mingw-get-setup.exe_ to Download the Installer.
+If you will be asked what packages you want to install just select all of them.
+
+
+###Step 2 Install Msys
+Open the MinGW Installation Manager and install the Msys package
+after the installation is done open the Msys shell its located at
+the installation path of MinGW mostly _C:\MinGW\msys\1.0\msys.bat_
+
+###Step 3 Install Some other Packages
+Make sure you installed:
+* **automake**
+* **autoconf**
+* **gcc**
+* **libtool**
+* **make**
+* **mingw-get**
+The packages should look like **msys-XXXX** or **mingw32-XXXX**
+if the exits both msys-packagename and mingw32-packagename install both
+to be safe. _To install click on the top left corner on Installation and Apply Changes._
+
+###Step 4 Installing more Packages
+Open the Msys-shell mostly _C:\MinGW\msys\1.0\msys.bat_ and type
+ **mingw-get install mingw32-libpdcurses**
+ **mingw-get install mingw32-pdcurses**
+and
+**mingw-get upgrade 'gcc=6.3.*'**
+to get the right gcc compiler you can use newer versions too but 
+I only tested it with version 6.3.0
+
+###Download sgminer version 4.2.2
+**Go to this link:** https://github.com/Epiger/sgminer/releases/tag/4.2.2
+and click on _Source code (zip)_. You can Download other version too but I
+modified at this point in time only the version 4.2.2
+
+###Download AMD APP SDK
+**Go to this link:** http://developer.amd.com/amd-accelerated-parallel-processing-app-sdk/
+and Download the AMD APP SDK and install it.
+Go to the AMD APP SDK installation folder and copy the **entry of the include** folder
+into the **C:/MinGW/include folder** and **C:\Program Files (x86)\AMD APP\lib\x86\libOpenCL.a** to **C:\MinGW\lib**
+
+###And Maybe Download AMD ADL SDK (optional)
+**Go to this link:** http://developer.amd.com/display-library-adl-sdk/
+and Download the AMD ADL SDK. You dont need to install it but you should copy
+the files: **adl\_defines.h**, **adl\_sdk.h**, **adl\_structures.h** into the 
+**ADL\_SDK** folder in your sgminer directory.
+
+###Install GTK-WIN
+Install GTK-WIN **from this url**: http://sourceforge.net/projects/gtk-win/
+and copy **libglib-2.0-0.dll** and **intl.dll** from _C:\Program Files\gtk2-runtime\bin_
+to _C:\MinGW\bin_
+
+###Download PKG-config
+**Go to this url**: http://ftp.gnome.org/pub/gnome/binaries/win32/dependencies/
+and Download _pkg-config\_0.26-1\_win32.zip_ also download
+_pkg-config-dev\_0.26-1\_win32.zip_.
+Copy **pkg-config.exe** from the normal pkg-config to _C:\MinGW\bin_
+and Copy **pkg.m4** from the dev pkg-config from _share/aclocal_ to
+C:\MinGW\share\aclocal
+
+###Install libcurl
+**Go to this URL**: https://curl.haxx.se/download/ and 
+Download **curl-7.25.0.zip** you can also download other
+versions but i tested it only with this version.
+Extract the zip file into your msys working directory
+mostly _C:\MinGW\msys\1.0\home\[USERNAME]\\_ then open the
+msys shell and type:
+_export "PKG\_CONFIG\_PATH=/usr/local/lib/pkgconfig"_
+
+_cd [CURL DIRECTORY probably curl-7.25.0]_
+_export "CFLAGS=-I/usr/local/include"_
+_export "LDFLAGS=-L/usr/local/lib"_
+_./configure_
+_make_
+_make install-strip_
+now libcurl should be installed if the compiler throws issues
+please repeat this process or report this in the issues.
+
+###Finally make sgminer
+Go inside your sgminer download folder by typing:
+_cd [FOLDERNAME]_
+and run:
+_autoreconf -fvi_
+_CFLAGS="-O2 -msse2" ./configure_
+after this command it should show you a overview about
+the packages you installed earlier
+_make_
+
+###Make a standalone sgminer Directory
+Make a new Folder and copy this files into it:
+**kernel folder**       _from sgminer directory_
+**sgminer.exe**         _from sgminer directory_
+**libcurl-4.dll**       _from C:\MinGW\msys\1.0\local\bin_
+**libeay32.dll**        _from C:\MinGW\msys\1.0\local\bin_
+**ssleay32.dll**        _from C:\MinGW\msys\1.0\local\bin_
+**libgcc_s_dw2-1.dll**  _from C:\MinGW\bin_
+**libpdcurses.dll**     _from C:\MinGW\bin_
+**pthreadGC-3.dll**     _from C:\MinGW\bin_
+but before you can run sgminer you have to make a **start.bat** file
+Open an editor and type:
+_setx GPU_MAX_ALLOC_PERCENT 100_
+_setx GPU_USE_SYNC_OBJECTS 1_
+_sgminer.exe -o [STRATUM POOL URL] -u [USERNAME].[WORKERID] -p [PASSWORD] -I 13 -g 1 --thread-concurrency 10000_
+_PAUSE_
+and save it as **start.bat**.
+now you can copy the folder you maked everywere you want and run
+sgminer by running **start.bat**.
+
+_Found some spelling mistakes please contact me._
+
+###Want to Know more about sgminer checkout the doc folder
+
+
+**here is my Litecoin address if you want to donate**
+LTC: LhWTXmdU8nLAdZLSVxoirQpBDXWj88fMqR
+**And Check out the Original Repository**: https://github.com/sgminer-dev/sgminer
+_Here starts the Original Readme.md_
 
 ## Introduction
 
