@@ -5,6 +5,7 @@
 #include "config.h"
 #include <errno.h>
 #include <time.h>
+#include <winsock2.h>
 #include <pthread.h>
 #include <sys/time.h>
 
